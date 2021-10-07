@@ -1,6 +1,6 @@
 let btn = document.getElementById('addBtn');
 console.log(btn);
-
+showNotes();
 
 btn.addEventListener('click', function () {
     let addTxt = document.getElementById('addTxt');
@@ -37,7 +37,7 @@ function showNotes() {
         <div class="card-body">
             <h5 class="card-title">Note ${index + 1}</h5>
             <p class="card-text">${element}</p>
-            <a href="#" class="btn btn-primary">Delete note</a>
+            <button onclick="deleteNote(${index})" class="btn btn-primary">Delete note</button>
         </div>
     </div>`
     });
@@ -50,3 +50,17 @@ function showNotes() {
         elemNotes.innerHTML = html
     }
 }
+function deleteNote(index) {
+    console.log("I am deleting ", index);
+    let noteItem = localStorage.getItem("notes");
+    if (noteItem == null) {
+        notesObj = [];
+    }
+    else {
+        notesObj = JSON.parse(noteItem);
+    }
+    
+    notesObj.splice(index,1);
+    localStorage.setItem("notes", JSON.stringify(notesObj));
+    showNotes();
+};
